@@ -31,7 +31,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", p =>
     {
-        p.WithOrigins("https://6883b963db8733000822772b--employeemanagementui.netlify.app/")
+        p.WithOrigins("https://6883b963db8733000822772b--employeemanagementui.netlify.app")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
