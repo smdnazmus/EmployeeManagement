@@ -57,7 +57,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(PayrollProfile));
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+//var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 
 
 var app = builder.Build();
@@ -73,8 +73,6 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 app.UseStaticFiles();
-
-app.Urls.Add($"https://*:{port}");
 
 app.UseRouting();
 
