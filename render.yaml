@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: EmployeeManagement
-    runtime: docker
-    repo: https://github.com/smdnazmus/EmployeeManagement
-    branch: master
-    plan: free
-    region: oregon
