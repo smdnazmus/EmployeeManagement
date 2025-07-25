@@ -29,9 +29,11 @@ var jwtKey = Environment.GetEnvironmentVariable("JwtKey")
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(p =>
+    options.AddPolicy("AllowFrontend", p =>
     {
-        p.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+        p.WithOrigins("https://6883b963db8733000822772b--employeemanagementui.netlify.app/")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
@@ -71,7 +73,7 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors("AllowFrontend");
 app.UseStaticFiles();
 
 app.UseRouting();
