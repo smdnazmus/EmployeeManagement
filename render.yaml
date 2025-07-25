@@ -1,9 +1,15 @@
 services:
   - type: web
     name: EmployeeManagement
-    runtime: dotnet
-    buildCommand: dotnet publish -c Release -o out
-    startCommand: dotnet out/EmployeeManagement.dll
+    env: dotnet
+    repo: https://github.com/smdnazmus/EmployeeManagement
+    branch: master
+    buildCommand: dotnet publish -c Release -o ./publish
+    startCommand: dotnet ./publish/EmployeeManagement.dll
+    plan: free
+    region: oregon
     envVars:
-      - key: ASPNETCORE_ENVIRONMENT
-        value: Production
+      - key: DefaultConnection
+        value: Server=(localdb)\Test;Database=testDB;Trusted_Connection=True;
+      - key: JwtKey
+        value: a-string-secret-at-least-256-bits-long
