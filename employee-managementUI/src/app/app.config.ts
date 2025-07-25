@@ -9,7 +9,6 @@ import { provideToastr } from 'ngx-toastr';
 import { CalendarModule } from 'angular-calendar';
 import { DateAdapter } from '@angular/material/core';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 export const appConfig: ApplicationConfig = {
@@ -27,7 +26,6 @@ export const appConfig: ApplicationConfig = {
       progressBar: true,
       toastClass: 'ngx-toastr', // default class with animation
       //closeButton: true
-    }),
-    importProvidersFrom(FullCalendarModule)
+    })
   ]
 };

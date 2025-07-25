@@ -4,9 +4,6 @@ import { Employee } from '../../models/employeeModel';
 import { EmpService } from '../../services/emp-service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {  CalendarModule, CalendarMonthViewComponent, DateAdapter } from 'angular-calendar';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions } from '@fullcalendar/core/index.js';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { FilterPipe } from "../../pipe/filter-pipe-pipe";
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -14,7 +11,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, BsDatepickerModule, FullCalendarModule, FilterPipe, FormsModule, RouterLink],
+  imports: [CommonModule, BsDatepickerModule, FilterPipe, FormsModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -23,12 +20,6 @@ export class Dashboard implements OnInit{
   searchTerm = '';
   birthdaysToday = 3;
   todoList = ['Review payroll', 'Approve Leave', 'Team Meeting at 3 PM'];
-  calendarOptions: CalendarOptions = {
-      initialView: 'dayGridMonth',
-      plugins: [dayGridPlugin],
-      events: [
-      ]
-    };
 
   employees = [
     { name: 'Alice', department: 'HR'},
