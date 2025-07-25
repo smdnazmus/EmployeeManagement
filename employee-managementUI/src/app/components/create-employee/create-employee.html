@@ -1,0 +1,182 @@
+<div class="container my-5">
+  <div class="card border-0 shadow-sm">
+    <!-- Header -->
+    <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+      <h4 class="fw-bold text-primary mb-0">
+        {{ isEditMode ? '✏️ Update Employee' : '🆕 Add New Employee' }}
+      </h4>
+      <a [routerLink]="['/employees']" class="btn btn-sm btn-secondary">← Back</a>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="empCreateForm" (ngSubmit)="submitForm()" class="row g-4">
+
+        <!-- 🧑 Avatar & ID -->
+        <fieldset class="border-bottom pb-3">
+          <legend class="fs-5 mb-3 text-success">🧑 Employee ID</legend>
+          <div class="col-12 d-md-flex align-items-start gap-4">
+            <div class="col-md-4">
+              <label class="form-label">Employee ID</label>
+              <input formControlName="employeeId" class="form-control" />
+            </div>
+            
+          </div>
+        </fieldset>
+
+        <!-- 📋 Personal Info -->
+        <fieldset class="border-bottom pb-3">
+  <legend class="fs-5 mb-3 text-success">📋 Personal Info</legend>
+  <div class="row">
+    <!-- Personal Info Fields -->
+    <div class="col-md-8">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label>First Name</label>
+          <input formControlName="firstName" class="form-control" autocomplete="given-name" />
+        </div>
+        <div class="col-md-6">
+          <label>Last Name</label>
+          <input formControlName="lastName" class="form-control" autocomplete="family-name" />
+        </div>
+        <div class="col-md-6">
+          <label>Birth Date</label>
+          <input formControlName="birthDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-6">
+          <label>NID</label>
+          <div class="input-group">
+            <input formControlName="nid" class="form-control me-4" autocomplete="nid" />
+            <button type="button" class="btn btn-outline-secondary" (click)="openNidDrawer()">
+              🗂️ Upload NID
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label>Username</label>
+          <input formControlName="username" class="form-control" autocomplete="username" />
+        </div>
+        <div *ngIf="!isEditMode" class="col-md-6">
+          <label>Password</label>
+          <input formControlName="password" type="password" class="form-control" autocomplete="new-password" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Preview + Upload -->
+    <div class="col-md-4 text-center mt-3 mt-md-0">
+      <button type="button" class="btn btn-outline-primary mb-3" (click)="openDrawer()">📷 Upload Photo</button>
+      <div *ngIf="photoPreviewUrl">
+        <img [src]="photoPreviewUrl" alt="Preview" class="rounded-circle border shadow-sm" width="140" height="140" />
+      </div>
+    </div>
+
+    <!-- 📄 NID Upload Drawer -->
+<div *ngIf="nidDrawerOpen" class="drawer bg-white shadow border-start" [class.drawer-show]="nidDrawerOpen">
+  <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Select NID File</h5>
+    <button type="button" class="btn-close" (click)="closeNidDrawer()"></button>
+  </div>
+  <div class="p-3">
+    <input type="file" accept=".pdf,image/*" (change)="onNidSelected($event)" class="form-control" />
+  </div>
+</div>
+
+
+  </div>
+</fieldset>
+
+
+        <!-- 📞 Contact Info -->
+        <fieldset class="border-bottom pb-3">
+          <legend class="fs-5 mb-3 text-success">📞 Contact Info</legend>
+          <div class="col-md-6">
+            <label>Email</label>
+            <input formControlName="email" type="email" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label>Phone Number</label>
+            <input formControlName="phoneNumber" type="tel" class="form-control" />
+          </div>
+        </fieldset>
+
+        <!-- 🏠 Address Info -->
+        <fieldset class="border-bottom pb-3">
+          <legend class="fs-5 mb-3 text-success">🏠 Address Info</legend>
+          <div class="col-md-6">
+            <label>Address</label>
+            <input formControlName="address" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label>City</label>
+            <input formControlName="city" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label>District</label>
+            <input formControlName="district" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label>Division</label>
+            <input formControlName="division" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label>Country</label>
+            <select formControlName="country" class="form-select">
+              <option disabled>Select Country</option>
+              <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- 🏢 Employment Info -->
+        <fieldset class="border-bottom pb-3">
+          <legend class="fs-5 mb-3 text-success">🏢 Employment Info</legend>
+          <div class="col-md-6">
+            <label>Department</label>
+            <select formControlName="department" class="form-select">
+              <option value="Adminstration">Administration</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Position</label>
+            <input formControlName="position" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label>Hire Date</label>
+            <input formControlName="hireDate" type="date" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label>Salary</label>
+            <input formControlName="salary" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label>Role</label>
+            <select formControlName="role" class="form-select">
+              <option value="Employee">Employee</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- ✅ Actions -->
+        <div class="col-12 d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-primary px-4">
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🖼️ Drawer Panel -->
+  <div *ngIf="drawerOpen" class="drawer bg-white shadow border-start" [class.drawer-show]="drawerOpen">
+    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Choose Photo</h5>
+      <button class="btn-close" (click)="closeDrawer()"></button>
+    </div>
+    <div class="p-3">
+      <input type="file" (change)="onFileSelected($event)" class="form-control" />
+    </div>
+  </div>
+</div>

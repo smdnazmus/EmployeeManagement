@@ -1,0 +1,39 @@
+<div class="container mt-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="card-header bg-primary text-white text-center">
+      <h5 class="mb-0">Change User Role</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="row g-3">
+
+        <!-- Current Role (read-only) -->
+        <div class="col-12">
+          <label for="currentRole" class="form-label">Current Role</label>
+          <input formControlName="currentRole" id="currentRole" type="text" class="form-control" readonly />
+        </div>
+
+        <!-- New Role -->
+        <div class="col-12">
+          <label for="newRole" class="form-label">New Role</label>
+          <select formControlName="newRole" id="newRole" class="form-select">
+            <option value="" disabled>Select New Role</option>
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+
+        <!-- Actions -->
+        <div class="col-12 d-flex justify-content-between mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Update Role</button>
+          <a [routerLink]="['/admin']" class="btn btn-secondary">Back</a>
+        </div>
+
+        <!-- Message -->
+        <div *ngIf="message" class="col-12 mt-2 text-info text-center">
+          {{ message }}
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

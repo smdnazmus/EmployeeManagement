@@ -1,0 +1,48 @@
+<div class="profile-container" *ngIf="employee">
+  <a [routerLink]="['/create-employee', employee.id]" class="btn btn-sm btn-info me-1">Edit</a>
+  <a [routerLink]="['/employees']" class="btn btn-sm btn-secondary">← Back</a>
+  <div class="header-section">
+    <div class="text-center mb-4" *ngIf="employee?.photoUrl">
+  <img 
+  [src]="'https://localhost:7209' + employee.photoUrl" 
+  alt="Employee Photo" 
+  class="rounded-circle shadow" 
+  width="150"
+  height="150"
+/>
+</div>
+
+    <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
+    <p class="position">{{ employee.position }} · {{ employee.department }}</p>
+  </div>
+
+  <div class="details-section">
+    <h3>📄 Personal Information</h3>
+    <ul>
+      <li><strong>Email:</strong> {{ employee.email }}</li>
+      <li><strong>Username:</strong> {{ employee.username }}</li>
+      <li><strong>Phone:</strong> {{ employee.phoneNumber }}</li>
+      <li><strong>Birth Date:</strong> {{ employee.birthDate | date }}</li>
+      <li><strong>NID:</strong> {{ employee.nid }}</li>
+    </ul>
+
+    <h3>📍 Location</h3>
+    <ul>
+      <li><strong>Address:</strong> {{ employee.address }}</li>
+      <li><strong>City:</strong> {{ employee.city }}</li>
+      <li><strong>District:</strong> {{ employee.district }}</li>
+      <li><strong>Division:</strong> {{ employee.division }}</li>
+      <li><strong>Country:</strong> {{ employee.country }}</li>
+    </ul>
+
+    <h3>🧑‍💼 Employment Details</h3>
+    <ul>
+      <li><strong>Employee ID:</strong> {{employee.employeeId}}</li>
+        <li><strong>Department:</strong> {{employee.department}}</li>
+        <li><strong>Position:</strong> {{employee.position}}</li>
+      <li><strong>Hire Date:</strong> {{ employee.hireDate | date }}</li>
+      <li><strong>Salary:</strong> {{ employee.salary | bdtFormat }}</li>
+      <li><strong>Role:</strong> {{ employee.role }}</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white text-center">
+      <h3 class="mb-0">{{ isEditMode ? 'Update User' : 'New User Registration' }}</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="registrationForm" (ngSubmit)="submitForm()" class="row g-3">
+
+        <!-- Personal Info -->
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name</label>
+          <input formControlName="firstName" id="firstName" class="form-control" autocomplete="given-name" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input formControlName="lastName" id="lastName" class="form-control" autocomplete="family-name" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="birthDate" class="form-label">Birth Date</label>
+          <input formControlName="birthDate" id="birthDate" type="date" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="username" class="form-label">Username</label>
+          <input formControlName="username" id="username" class="form-control" autocomplete="username" />
+        </div>
+
+        <div *ngIf="!isEditMode" class="col-md-6">
+          <label for="password" class="form-label">Password</label>
+          <input formControlName="password" id="password" type="password" class="form-control" autocomplete="new-password" />
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input formControlName="email" id="email" type="email" class="form-control" autocomplete="email" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input formControlName="phoneNumber" id="phoneNumber" type="tel" class="form-control" autocomplete="tel" />
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-6">
+          <label for="address" class="form-label">Address</label>
+          <input formControlName="address" id="address" class="form-control" autocomplete="street-address" />
+        </div>
+
+        <div class="col-md-4">
+          <label for="city" class="form-label">City</label>
+          <input formControlName="city" id="city" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+          <label for="district" class="form-label">District</label>
+          <input formControlName="district" id="district" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+          <label for="division" class="form-label">Division</label>
+          <input formControlName="division" id="division" class="form-control" />
+        </div>
+
+        <!-- Country & Role -->
+        <div class="col-md-6">
+          <label for="country" class="form-label">Country</label>
+          <select formControlName="country" id="country" class="form-select">
+            <option value="" disabled>Select Country</option>
+            <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="role" class="form-label">Role</label>
+          <select formControlName="role" id="role" class="form-select">
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+
+        <!-- Actions -->
+        <div class="col-12 d-flex justify-content-between mt-4">
+          <button type="submit" class="btn btn-primary">
+            {{ isEditMode ? 'Update' : 'Register' }}
+          </button>
+          <a [routerLink]="['/users']" class="btn btn-secondary">Back</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

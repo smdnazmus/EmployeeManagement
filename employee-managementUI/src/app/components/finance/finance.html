@@ -1,0 +1,211 @@
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-end mb-4">
+  <button class="btn btn-outline-primary" (click)="openReportDrawer()">
+    📊 Generate Report
+  </button>
+</div>
+
+
+  <div class="row g-4">
+
+    <!-- Incomes -->
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-success text-white fw-bold d-flex justify-content-between align-items-center">
+            <span>💰 Company Incomes</span>
+            <span class="badge bg-success-subtle text-dark">
+                {{ getMonthDate(filter ? month : filterMonth, filter ? year : filterYear) | date: 'MMMM' }} {{ filter ? filterYear : year }}
+            </span>
+
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0 text-muted">Total: <span class="badge bg-success-subtle text-dark">{{ totalIncome | bdtFormat }}</span></h6>
+                <button class="btn btn-sm btn-outline-success" (click)="openIncomeDrawer()">➕ Add Income</button>
+            </div>
+            <div class="d-flex gap-3 mb-3 align-items-center">
+                <input type="month" [formControl]="filterMonthControl" class="form-control" />
+                <button class="btn btn-outline-primary" (click)="applyIncomeFilter()">Filter</button>
+                <button class="btn btn-outline-secondary" (click)="clearIncomeFilter()">Clear</button>
+            </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Source</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let income of incomes">
+                  <td>{{ income.source }}</td>
+                  <td>{{ income.amount | bdtFormat }}</td>
+                  <td>{{ income.date | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ income.description }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-warning me-1" (click)="openIncomeDrawerForUpdate(income)">Edit</button>
+                    <button class="btn btn-sm btn-danger me-1" (click)="deleteIncome(income.id)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expenses -->
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-danger text-white fw-bold d-flex justify-content-between align-items-center">
+          <span>📉 Company Expenses</span>
+          <span class="badge bg-success-subtle text-dark">
+            {{getMonthDate(month, year) | date: 'MMMM'}} {{year}}
+          </span>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0 text-muted">Total: <span class="badge bg-danger-subtle text-dark">{{ totalExpense | bdtFormat }}</span></h6>
+                <button class="btn btn-sm btn-outline-danger" (click)="openExpenseDrawer()">➖ Add Expense</button>
+            </div>
+            <div class="d-flex gap-3 mb-3 align-items-center">
+                <input type="month" [formControl]="filterMonthControl" class="form-control" />
+                <button class="btn btn-outline-primary" (click)="applyExpenseFilter()">Filter</button>
+                <button class="btn btn-outline-secondary" (click)="clearExpenseFilter()">Clear</button>
+            </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let expense of expenses">
+                  <td>{{ expense.catagory }}</td>
+                  <td>{{ expense.amount | bdtFormat }}</td>
+                  <td>{{ expense.date | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ expense.description }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-warning me-1" (click)="openExpenseDrawerForUpdate(expense)">Edit</button>
+                    <button class="btn btn-sm btn-danger me-1" (click)="deleteExpense(expense.id)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Income Drawer -->
+<div *ngIf="incomeDrawerOpen" class="drawer drawer-show bg-white shadow border-start">
+  <div class="p-3 border-bottom d-flex justify-content-between">
+    <h5>Add Company Income</h5>
+    <button class="btn-close" (click)="closeIncomeDrawer()"></button>
+  </div>
+
+  <form [formGroup]="incomeForm" (ngSubmit)="submitIncome()" class="p-3">
+    <div class="mb-3">
+      <label class="form-label">Source</label>
+      <input formControlName="source" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Amount</label>
+      <input formControlName="amount" type="number" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input formControlName="date" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea formControlName="description" rows="3" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-success" type="submit">Save Income</button>
+  </form>
+</div>
+
+<!-- Expense Drawer (same layout) -->
+<div *ngIf="expenseDrawerOpen" class="drawer drawer-show bg-white shadow border-start">
+  <div class="p-3 border-bottom d-flex justify-content-between">
+    <h5>Add Company Expense</h5>
+    <button class="btn-close" (click)="closeExpenseDrawer()"></button>
+  </div>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="submitExpense()" class="p-3">
+    <div class="mb-3">
+      <label class="form-label">Category</label>
+      <input formControlName="catagory" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Amount</label>
+      <input formControlName="amount" type="number" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input formControlName="date" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea formControlName="description" rows="3" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-danger" type="submit">Save Expense</button>
+  </form>
+</div>
+
+<!-- Report Drawer -->
+<div *ngIf="reportDrawerOpen" class="drawer drawer-show bg-white shadow border-start" style="width: 400px; position: fixed; right: 0; top: 0; height: auto; z-index: 1050; overflow-y: auto; transition: transform 0.3s ease;">
+  <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+    <h5>Generate Financial Report</h5>
+    <button class="btn-close" (click)="closeReportDrawer()"></button>
+  </div>
+
+  <div class="p-3">
+    <!-- Monthly Report Section -->
+    <div class="mb-4 border-bottom pb-3">
+      <h6 class="mb-3">📄 Monthly Report</h6>
+      <div class="mb-2">
+        <label class="form-label">Month</label>
+        <select [(ngModel)]="selectedMonth" class="form-select">
+          <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Year</label>
+        <select [(ngModel)]="selectedYear" class="form-select">
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+      <button class="btn btn-success w-100 mt-2" (click)="downloadReport()">
+        📥 Download Monthly Report
+      </button>
+    </div>
+
+    <!-- Yearly Report Section -->
+    <div>
+      <h6 class="mb-3">🗓️ Yearly Report</h6>
+      <div class="mb-2">
+        <label class="form-label">Year</label>
+        <select [(ngModel)]="selectedYearForYearly" class="form-select">
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+      <button class="btn btn-outline-primary w-100 mt-2" (click)="downloadYearlyReport()">
+        📥 Download Yearly Report
+      </button>
+    </div>
+  </div>
+</div>
+
+
+</div>

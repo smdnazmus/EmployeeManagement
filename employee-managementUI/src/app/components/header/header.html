@@ -1,0 +1,9 @@
+<header class="d-flex justify-content-between align-items-center bg-white px-4 py-3 border-bottom shadow-sm">
+  <h4 class="mb-0 text-primary">Employee Management Software</h4>
+  <div class="text-end">
+    <span *ngIf="fullName" class="me-3 text-dark fw-semibold">
+      👤 {{ fullName }}
+    </span>
+    <button class="btn btn-sm btn-danger" (click)="logout()">Logout</button>
+  </div>
+</header>

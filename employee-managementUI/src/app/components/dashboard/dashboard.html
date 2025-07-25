@@ -1,0 +1,89 @@
+<!-- Top Summary Cards -->
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5>Total Employees</h5>
+        <p class="display-6">{{ totalEmployees }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5>Today's Birthdays</h5>
+        <p class="display-6">{{ birthdaysToday }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5>To-Do List</h5>
+        <ul class="list-unstyled">
+          <li *ngFor="let item of todoList">✅ {{ item }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Employee Directory + Sidebar Cards -->
+<div class="row">
+  <!-- Employee Directory -->
+  <div class="col-md-8 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5>Employee Directory</h5>
+        <div class="d-flex">
+            <input [(ngModel)]="searchTerm" class="form-control mb-3" placeholder="Search employee..." />
+        </div>
+        
+        <div *ngFor="let emp of emps.slice(0, 10) | filter:searchTerm" class="d-flex align-items-center mb-3 border-bottom pb-2">
+            <img [src]="'https://localhost:7209' + emp.photoUrl" alt="{{ emp.employeeId }}" class="rounded-circle me-3" width="50" height="50" />
+            <div>
+                <a [routerLink]="['/employees', emp.id]" class="employee-link">
+                <strong >{{ emp.firstName }} {{ emp.lastName }}</strong><br>
+                <span class="text-muted">{{ emp.department }}</span>
+                </a>
+            </div>
+            </div>
+
+            <button *ngIf="employees.length > 10" class="btn btn-outline-primary btn-sm mt-2">
+            View All
+            </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions + Notifications -->
+  <div class="col-md-4">
+    <!-- Quick Actions -->
+    <div class="card shadow-sm mb-3">
+      <div class="card-body">
+        <h5>Quick Actions</h5>
+        <a [routerLink]="['/create-employee']"  class="btn btn-sm btn-success w-100 mb-2">Add Employee</a>
+        <!--<button class="btn btn-primary w-100 mb-2">Add Employee</button>-->
+        <button class="btn btn-sm btn-warning w-100">View Payroll</button>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="card shadow-sm mb-3">
+      <div class="card-body">
+        <h5>Notifications</h5>
+        <ul class="list-unstyled">
+          <li *ngFor="let note of notifications">📣 {{ note }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Calender-->
+    <div class="card shadow-sm"> 
+        <div class="card-body">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      
+    </div>
+  </div>
+</div>

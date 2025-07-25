@@ -1,0 +1,19 @@
+<!-- Main App Layout -->
+<div class="min-vh-100 d-flex flex-column bg-body">
+
+  <!-- Header -->
+  <app-header *ngIf="showLayout" class="rounded-bottom"></app-header>
+
+  <!-- Sidebar + Content -->
+  <div class="d-flex flex-grow-1 px-3 py-2">
+  <app-sidebar *ngIf="showLayout" class="rounded me-4" style="width: 240px;"></app-sidebar>
+
+  <div class="flex-grow-1 bg-white rounded p-4" style="margin-right: 40px;">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+  <!-- Footer -->
+  <app-footer *ngIf="showLayout" class="rounded-top mt-auto"></app-footer>
+
+</div>

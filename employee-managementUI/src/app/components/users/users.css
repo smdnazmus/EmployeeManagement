@@ -1,0 +1,17 @@
+.card-title {
+  font-size: 1.25rem;
+  color: #34495e;
+}
+
+.card-body {
+  padding: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #f7f9fc;
+}
+
+.badge {
+  font-size: 0.85rem;
+}

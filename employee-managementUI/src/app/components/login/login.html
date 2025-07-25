@@ -1,0 +1,31 @@
+<div class="container vh-100 d-flex justify-content-center align-items-center" >
+  <div class="card shadow p-4" style="width: 100%; max-width: 400px; background-color: powderblue;">
+    <div class="card-header">
+        <h2 class="text-center fw-bold text-primary">Employee Management Software</h2>
+    </div>
+    <br>
+        <h4 class="card-title text-center mb-4">🔐 Sign In</h4>
+    <form>
+      <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input [(ngModel)]="loginreq.username" name="username" id="username" class="form-control" placeholder="Enter username" required />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input [(ngModel)]="loginreq.password" name="password" id="password" type="password" class="form-control" placeholder="Enter password" required />
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger py-2" role="alert">
+        {{ error }}
+      </div>
+
+      <div class="d-grid">
+        <button (click)="login()" type="button" class="btn btn-primary">Login</button>
+        <br>
+        <a [routerLink]="['/reset-password-direct']" class="btn btn-dark ">Reset Password</a>
+      </div>
+
+    </form>
+  </div>
+</div>

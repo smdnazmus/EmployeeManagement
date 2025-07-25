@@ -1,0 +1,9 @@
+<div class="sidebar-wrapper bg-light border-end h-100 px-3 pt-4" style="width: 180px;">
+  <ul class="nav flex-column">
+    <li *ngFor="let link of navLinks" class="nav-item mb-3">
+      <a [routerLink]="link.path" class="nav-link d-flex align-items-center text-dark">
+        <i class="{{ link.icon }} me-2 text-primary"></i> <span>{{ link.label }}</span>
+      </a>
+    </li>
+  </ul>
+</div>

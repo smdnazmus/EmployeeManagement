@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Positioning */
+.toast-top-center {
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed;
+  z-index: 9999;
+  padding: 0;
+}
+
+/* Base Toast */
+.ngx-toastr {
+  animation: fadeSlideDown 0.4s ease forwards;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-family: 'Segoe UI', sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+}
+
+/* Animation */
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Types */
+.toast-success {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: #fff;
+}
+
+.toast-error {
+  background: linear-gradient(135deg, #dc3545, #bd2130);
+  color: #fff;
+}
+
+.toast-info {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: #fff;
+}
+
+.toast-warning {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+  color: #212529;
+}
+
+/* Optional: Icon support */
+.ngx-toastr::before {
+  content: 'ℹ️';
+  margin-right: 10px;
+  font-size: 16px;
+}
+.toast-success::before { content: '✅'; }
+.toast-error::before { content: '⛔'; }
+.toast-warning::before { content: '⚠️'; }
+
+
+.fc {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.fc .fc-toolbar-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #0d6efd;
+}
+
+.fc .fc-button-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  font-size: 0.85rem;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #084298;
+}
+
+
+.fc-event {
+  background-color: #007bff;
+  border: none;
+  color: white;
+}
+
+
+
+

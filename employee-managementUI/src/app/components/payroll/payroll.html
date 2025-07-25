@@ -1,0 +1,136 @@
+
+<div class="container mt-5">
+  <h5>{{ editingId ? 'Edit Payroll' : 'Add Payroll' }}</h5>
+  <div class="d-flex gap-3 mb-3 align-items-center">
+    <input type="month" [formControl]="filterMonthControl" class="form-control" />
+    <button class="btn btn-outline-primary" (click)="applyFilter()">Filter</button>
+    <button class="btn btn-outline-secondary" (click)="clearFilter()">Clear</button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="card p-3 mb-4">
+    <input formControlName="employeeId" (keydown.enter)="onEmpIdEnter($event)" placeholder="Employee ID" class="form-control mb-2" />
+    <div class="card p-2 mb-2 bg-light" *ngIf="employeeInfo">
+      <strong>Name:</strong> {{ employeeInfo.firstName }} {{ employeeInfo.lastName }} <br />
+      <strong>Department:</strong> {{ employeeInfo.department }} <br />
+      <strong>Position:</strong> {{ employeeInfo.position }}
+    </div>
+    <input formControlName="payDate" type="date" class="form-control mb-2" />
+    <input formControlName="baseSalary" placeholder="Base Salary" class="form-control mb-2" readonly/>
+    <input formControlName="bonus" placeholder="Bonus" class="form-control mb-2" />
+    <input formControlName="deductions" placeholder="Deductions" class="form-control mb-2" />
+    <div class="d-flex gap-3 mb-3 align-items-center">
+      <button class="btn btn-sm btn-success" type="submit">{{ editingId ? 'Update' : 'Create' }}</button>
+      <button class="btn btn-sm btn-primary" (click)="generatePayrollBatch()">Generate Payroll for This Month</button>
+      <button class="btn btn-sm btn-warning" (click)="toggleDrawer()">
+         Generate Monthly Payroll
+      </button>
+      <button class="btn btn-sm btn-outline-success" (click)="downloadPayslipArchive()">Download Payslips ZIP</button>
+    </div>
+    
+  </form>
+
+  <div class="row mb-4">
+  <div class="col">
+    <div class="card p-2 bg-light text-center">
+      <h6>Total Payroll This Month</h6>
+      <strong>{{ totalPayrollThisMonth | bdtFormat }}</strong>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card p-2 bg-light text-center">
+      <h6>Records This Month</h6>
+      <strong>{{ payrollThisMonth.length }}</strong>
+    </div>
+  </div>
+  </div>
+
+
+  <div *ngIf="selectedRecord; else noRecord">
+    <div #payslipToPrint class="payslip px-4 py-3 me-1">
+      <div style="text-align: center; margin-bottom: 1rem;">
+        <img src="assets/logoAngular.png" alt="company Logo" width="80" /> 
+        <h5 style="margin: 0;">TestApp</h5>
+        <small>Payslip for {{ selectedRecord.payDate | date: 'MMMM yyyy'}}</small>
+      </div>
+
+      <hr />
+
+      <div>
+        <p><strong>Employee ID:</strong> {{ selectedRecord.employeeId }} </p>
+        <p><strong>Pay Date:</strong> {{ selectedRecord.payDate | date: 'mediumDate' }} </p>
+        <p><strong>Base Salary:</strong> {{ selectedRecord.baseSalary | bdtFormat }} </p>
+        <p><strong>Bonus:</strong> {{ selectedRecord.bonus | bdtFormat }} </p>
+        <p><strong>Deductions:</strong> {{ selectedRecord.deductions | bdtFormat }} </p>
+        <div class="mt-2">
+          <strong>Estimated Net Pay:</strong> {{ netPay | bdtFormat }}
+        </div>
+
+      </div>
+  
+      <hr />
+
+      <!-- 
+      <div style="text-align: right;">
+        <p style="margin: 0;">Authorized By</p>
+        <img src="assets/signature.png" alt="Signature" width="100" />
+      </div>
+      -->
+    </div>
+    
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-outline-primary me-1" (click)="downloadPayslip()">Download PDF</button>
+    </div>
+    
+  </div>
+
+  <ng-template #noRecord>
+    <div class="alert alert-warning text-center">
+      No record selected. Please choose a payroll entry to view the payslip.
+    </div>
+  </ng-template>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+      <!--  <th>Employee Name</th> -->
+        <th>Pay Date</th>
+        <th>Base</th>
+        <th>Bonus</th>
+        <th>Deductions</th>
+        <th>Net Pay</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of filteredList">
+        <td>{{ record.employeeId }}</td>
+      <!--  <td>{{ EmployeeName(record.employeeId)}}</td> -->
+        <td>{{ record.payDate | date }}</td>
+        <td>{{ record.baseSalary | bdtFormat }}</td>
+        <td>{{ record.bonus | bdtFormat }}</td>
+        <td>{{ record.deductions | bdtFormat }}</td>
+        <td>{{ record.baseSalary + record.bonus - record.deductions | bdtFormat }}</td>
+        <td>
+          <button class="btn btn-sm btn-info me-1" (click)="selectRecord(record)">View Payslip</button>
+          <button class="btn btn-sm btn-success me-1" (click)="downloadPayslipFromBackend(record)">Download</button>
+          <button class="btn btn-sm btn-success me-1" (click)="exportCSV()">Export CSV</button>
+          <button class="btn btn-sm btn-warning me-1" (click)="editPayroll(record)">Edit</button>
+          <button class="btn btn-sm btn-danger me-1" (click)="deletePayroll(record.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="slide-panel" *ngIf="isDrawerOpen">
+  <div class="card shadow-sm p-3 bg-white rounded" style="width: 400px; position: fixed; right: 0; top: 0; height: 100vh; z-index: 1050; overflow-y: auto; transition: transform 0.3s ease;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="mb-0">Select Desired Date</h5>
+      <button class="btn-close" (click)="toggleDrawer()" aria-label="Close"></button>
+    </div>
+    <input type="date" class="form-control mb-3" (focus)="touched = true" [(ngModel)]="inputValue" placeholder="Desired Date"/>
+    <button class="btn btn-success w-100" [disabled]="!touched || !inputValue" (click)="generateMonthlyPayroll()">Generate</button>
+  </div>
+</div>
+
+

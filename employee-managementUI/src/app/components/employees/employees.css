@@ -1,0 +1,28 @@
+.card-title {
+  font-size: 1.25rem;
+  color: #34495e;
+}
+
+.card-body {
+  padding: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #f7f9fc;
+}
+
+li {
+  margin-bottom: 5px; /* Adds spacing between list items */
+}
+
+.badge {
+  font-size: 0.85rem;
+  
+ 
+}
+
+.card-header .btn-group .btn {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.75rem;
+}
