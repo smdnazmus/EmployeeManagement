@@ -1,4 +1,4 @@
 [build]
   base = "employee-managementUI"
   command = "npm install --force && npm run build"
-  publish = "employee-managementUI/dist/employee-managementUI"
+  publish = "dist/employee-managementUI"
