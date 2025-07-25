@@ -416,8 +416,6 @@ namespace EmployeeManagement.Controllers
                     Console.WriteLine(ex.Message);
                     Console.WriteLine(ex.StackTrace);
                 }
-
-
             }
 
             return Ok(new { created = newPayrolls.Count });
