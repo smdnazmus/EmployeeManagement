@@ -2,3 +2,8 @@
   base = "employee-managementUI"
   command = "npm install --force && npm run build"
   publish = "dist/employee-managementUI"
+  
+  [[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
