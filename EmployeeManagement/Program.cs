@@ -65,6 +65,10 @@ builder.Services.AddAutoMapper(typeof(PayrollProfile));
 
 var app = builder.Build();
 
+
+
+app.UseCors("AllowFrontend");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -74,7 +78,7 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
-app.UseCors("AllowFrontend");
+
 app.UseStaticFiles();
 
 app.UseRouting();
