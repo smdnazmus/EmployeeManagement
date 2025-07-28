@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using EmployeeManagement.Models;
 
 namespace EmployeeManagement.Data
