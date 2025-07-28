@@ -94,8 +94,16 @@ namespace EmployeeManagement.Controllers
             return Ok(emp);
         }
 
+        [HttpOptions("login")]
+        public IActionResult Preflight()
+        {
+            return Ok(); // Respond to CORS preflight
+        }
+
+
 
         [HttpPost("login")]
+
         public IActionResult Login(LoginRequest login)
         {
             var employee = _context.Employees.FirstOrDefault(u => u.Username == login.Username);

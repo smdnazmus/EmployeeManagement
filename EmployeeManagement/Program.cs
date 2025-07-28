@@ -7,11 +7,15 @@ using QuestPDF.Infrastructure;
 using EmployeeManagement.Data;
 using EmployeeManagement.Models;
 using EmployeeManagement.Services;
+using DotNetEnv;
 
 QuestPDF.Settings.License = LicenseType.Community;
 
+// Load .env file at startup
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+var env = builder.Environment;
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
@@ -23,10 +27,16 @@ var connectionString = Environment.GetEnvironmentVariable("DefaultConnection")
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(connectionString));
-*/
+
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+*/
+var connectionString = Environment.GetEnvironmentVariable("DefaultConnection")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 //var jwtkey = builder.Configuration["JwtKey"];
 var jwtKey = Environment.GetEnvironmentVariable("JwtKey")
@@ -36,13 +46,29 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", p =>
     {
-        p.WithOrigins("https://6883b963db8733000822772b--employeemanagementui.netlify.app")
+        var frontendOrigin = env.IsDevelopment()
+            ? "http://localhost:4200"
+            : "https://6883b963db8733000822772b--employeemanagementui.netlify.app";
+
+        p.WithOrigins(frontendOrigin)
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+         .AllowCredentials();
+    });
+});
+
+/*
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", p =>
+    {
+        p.WithOrigins("http://localhost:4200")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
     });
 });
-
+*/
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -70,9 +96,21 @@ builder.Services.AddAutoMapper(typeof(PayrollProfile));
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    var origin = context.Request.Headers["Origin"];
+    Console.WriteLine($"Origin received: {origin}");
+    await next();
+});
 
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseCors("AllowFrontend");
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -84,9 +122,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 
 
-app.UseStaticFiles();
 
-app.UseRouting();
 
 app.UseAuthentication();
 
