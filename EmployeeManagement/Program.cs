@@ -99,6 +99,8 @@ builder.Services.AddAutoMapper(typeof(PayrollProfile));
 
 var app = builder.Build();
 
+app.UseCors("AllowFrontend");
+
 app.Use(async (context, next) =>
 {
     var origin = context.Request.Headers["Origin"];
@@ -109,11 +111,6 @@ app.Use(async (context, next) =>
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseCors("AllowFrontend");
-
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
