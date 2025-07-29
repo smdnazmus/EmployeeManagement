@@ -51,7 +51,7 @@ builder.Services.AddCors(options =>
     {
         var frontendOrigin = env.IsDevelopment()
             ? "http://localhost:4200"
-            : "https://6883b963db8733000822772b--employeemanagementui.netlify.app";
+            : "https://employeemanagementui.netlify.app";
 
         p.WithOrigins(frontendOrigin)
          .AllowAnyHeader()
