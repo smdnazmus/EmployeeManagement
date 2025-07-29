@@ -26,9 +26,29 @@ namespace EmployeeManagement.Data
                 .HasForeignKey(p => p.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<PayrollRecord>()
+                .Property(p => p.PayDate)
+                .HasConversion(v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            modelBuilder.Entity<PayrollRecord>()
+                .Property(p => p.UpdatedOn)
+                .HasConversion(v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
             modelBuilder.Entity<Employee>()
                 .HasIndex(e => e.EmployeeId)
                 .IsUnique();
+
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.BirthDate)
+                .HasConversion(v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.HireDate)
+                .HasConversion(v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
             modelBuilder.Entity<Employee>()
                 .Property(e => e.Salary)
@@ -54,9 +74,21 @@ namespace EmployeeManagement.Data
                .Property(p => p.Amount)
                .HasPrecision(18, 2);
 
+            modelBuilder.Entity<CompanyIncome>()
+               .Property(p => p.Date)
+               .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
             modelBuilder.Entity<CompanyExpense>()
                .Property(p => p.Amount)
                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<CompanyExpense>()
+               .Property(p => p.Date)
+               .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
             base.OnModelCreating(modelBuilder);
         }

@@ -57,7 +57,7 @@ namespace EmployeeManagement.Controllers
             if (!string.IsNullOrWhiteSpace(dto.Department)) emp.Department = dto.Department;
             if (!string.IsNullOrWhiteSpace(dto.Position)) emp.Position = dto.Position;
             if (dto.Salary != 0) emp.Salary = dto.Salary;
-
+           
             // Handle password change if requested
             if (!string.IsNullOrWhiteSpace(dto.Password))
             {
@@ -70,8 +70,16 @@ namespace EmployeeManagement.Controllers
                 emp.Role = dto.Role;
             }
 
-            _context.Entry(emp).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            // _context.Entry(emp).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal error: {ex.Message}");
+            }
             return NoContent();
         }
 

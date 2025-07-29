@@ -71,6 +71,7 @@ namespace EmployeeManagement.Controllers
                 EmployeeId = dto.EmployeeId,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
+                NID = dto.NID,
                 Username = dto.Username,
                 Email = dto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
