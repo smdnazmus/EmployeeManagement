@@ -4,7 +4,7 @@
   <div class="header-section">
     <div class="text-center mb-4" *ngIf="employee?.photoUrl">
   <img 
-  [src]="'https://localhost:7209' + employee.photoUrl" 
+  [src]="apiBaseUrl + employee.photoUrl" 
   alt="Employee Photo" 
   class="rounded-circle shadow" 
   width="150"

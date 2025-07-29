@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Employee } from '../../models/employeeModel';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-create-employee',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './create-employee.css'
 })
 export class CreateEmployee {
+  apiBaseUrl = environment.apiBaseUrl;
   employee: any = {};
   empCreateForm!: FormGroup;
   isEditMode = false;
@@ -84,7 +86,7 @@ export class CreateEmployee {
       this.empCreateForm.patchValue(formattedEmp);
       this.empCreateForm.get('passwordHash')?.setValue(''); // optionally clear the password field
       this.empCreateForm.controls['employeeId'].setValue(emp.employeeId);
-      this.photoPreviewUrl = 'https://localhost:7209' + emp.photoUrl;
+      this.photoPreviewUrl = this.apiBaseUrl + emp.photoUrl;
     });
   }
 
@@ -202,7 +204,7 @@ uploadPhoto(file: File, id: number): void {
   this.empService.uploadPhoto(id, formData).subscribe({
     next: (res: any) => {
       this.empCreateForm.patchValue({ photoUrl: res.photoUrl });
-      this.photoPreviewUrl = 'https://localhost:7209' + res.photoUrl;
+      this.photoPreviewUrl = this.apiBaseUrl + res.photoUrl;
     },
     error: err => console.error('Upload failed:', err)
   });

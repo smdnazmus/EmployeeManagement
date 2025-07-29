@@ -3,6 +3,7 @@ import { EmpService } from '../../services/emp-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BdtFormatPipe } from "../../pipe/bdt-format-pipe";
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-employee-profile',
@@ -11,6 +12,7 @@ import { BdtFormatPipe } from "../../pipe/bdt-format-pipe";
   styleUrl: './employee-profile.css'
 })
 export class EmployeeProfile implements OnInit {
+  apiBaseUrl = environment.apiBaseUrl;
   employee: any;
 
   constructor(private empService: EmpService, private route: ActivatedRoute) {}
