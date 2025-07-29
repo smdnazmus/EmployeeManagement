@@ -8,6 +8,7 @@ using EmployeeManagement.Data;
 using EmployeeManagement.Models;
 using EmployeeManagement.Services;
 using DotNetEnv;
+using Microsoft.Extensions.FileProviders;
 
 QuestPDF.Settings.License = LicenseType.Community;
 
@@ -108,7 +109,12 @@ app.Use(async (context, next) =>
     await next();
 });
 
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+    RequestPath = "/uploads"
+});
 
 app.UseRouting();
 
