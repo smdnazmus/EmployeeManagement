@@ -7,6 +7,8 @@ import {  CalendarModule, CalendarMonthViewComponent, DateAdapter } from 'angula
 import { FilterPipe } from "../../pipe/filter-pipe-pipe";
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment.prod';
+
 
 
 @Component({
@@ -16,6 +18,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './dashboard.css'
 })
 export class Dashboard implements OnInit{
+  apiBaseUrl = environment.apiBaseUrl;
   emps: Employee[] = [];
   searchTerm = '';
   birthdaysToday = 3;
