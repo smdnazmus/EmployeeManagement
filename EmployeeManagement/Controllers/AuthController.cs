@@ -104,7 +104,7 @@ namespace EmployeeManagement.Controllers
 
         [HttpPost("login")]
 
-        public IActionResult Login(LoginRequest login)
+        public IActionResult Login([FromBody] LoginRequest login)
         {
             var employee = _context.Employees.FirstOrDefault(u => u.Username == login.Username);
             
