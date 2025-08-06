@@ -17,6 +17,9 @@ import { EmpService } from '../../services/emp-service';
   styleUrl: './leave-request.css'
 })
 export class LeaveRequest implements OnInit{
+openApplyLeaveModal() {
+throw new Error('Method not implemented.');
+}
   searchEmployeeId: number = 0;
   employeeLeaves: LeaveReq[] = [];
   allLeaves: any[] = [];
@@ -28,6 +31,8 @@ export class LeaveRequest implements OnInit{
 
   //groupedLeaves: [month: string, records: any[]][] = [];
   groupedLeaves: { [month: string]: any[] } = {};
+
+  date: Date = new Date();
 
 
 
@@ -107,6 +112,7 @@ toggleMonth(monthKey: string): void {
     this.leaveService.getAllLeaves().subscribe({
       next: data => {
         this.allLeaves = data;
+        console.log('Raw leave data:', this.allLeaves);
         this.filteredList = [...data];
         this.groupedLeaves = this.groupByMonth(this.filteredList);
       }, 

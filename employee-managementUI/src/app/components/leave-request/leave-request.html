@@ -3,7 +3,12 @@
 
     <!-- Leave History -->
     <section class="leave-history mb-4">
-      <h3 class="mb-3">📅 Leave History</h3>
+      <!--<h3 class="mb-3">📅 Leave History</h3>-->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Leave History</h2>
+        <button class="btn btn-sm btn-success" (click)="onDateClick(date)">Apply Leave</button>
+      </div>
+
 
       <div *ngFor="let month of groupedLeaves | keyvalue" class="mb-4">
         <div class="month-label d-flex justify-content-between align-items-center bg-light p-2 rounded shadow-sm" (click)="toggleMonth(month.key)">
@@ -11,8 +16,8 @@
           <span class="chevron" [class.rotate]="openedMonths[month.key]">▼</span>
         </div>
 
-        <div *ngIf="openedMonths[month.key]" class="mt-2">
-          <table class="table table-bordered table-hover">
+        <div class="mt-2">
+          <table class="table table-striped table-hover" *ngIf="openedMonths[month.key]">
             <thead class="table-secondary">
               <tr>
                 <th>Employee Name</th>
@@ -27,8 +32,8 @@
               <tr *ngFor="let leave of month.value">
                 <td>{{ leave.employeeName }}</td>
                 <td>{{ leave.leaveType }}</td>
-                <td>{{ leave.from | date: 'mediumDate' }}</td>
-                <td>{{ leave.to | date: 'mediumDate' }}</td>
+                <td>{{ leave.startDate | date: 'mediumDate' }}</td>
+                <td>{{ leave.endDate | date: 'mediumDate' }}</td>
                 <td>
                   <span class="badge"
                         [ngClass]="{
