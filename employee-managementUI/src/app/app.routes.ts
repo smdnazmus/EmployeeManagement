@@ -15,13 +15,15 @@ import { EmployeeProfile } from './components/employee-profile/employee-profile'
 import { Payroll } from './components/payroll/payroll';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Finance } from './components/finance/finance';
+import { LeaveRequest } from './components/leave-request/leave-request';
+import { LeaveReqForm } from './components/leave-req-form/leave-req-form';
 
 
 
 export const routes: Routes = [
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     {path: 'login', component: Login, data: { hideLayout: true}},
-    {path: 'reset-password-direct', component: DirectPasswordReset},
+    {path: 'reset-password-direct', component: DirectPasswordReset, data: {hideLayout: true}},
     {path: 'change-emp-password/:id', component: ChangePassword, canActivate: [AuthGuard]},
     {path: 'update-role/:id', component: UpdateRole},
     {path: 'register', component: Register},
@@ -37,6 +39,11 @@ export const routes: Routes = [
     {path: 'payroll', component: Payroll, canActivate: [AuthGuard]},
     {path: 'payroll/:id', component: Payroll, canActivate: [AuthGuard]},
     {path: 'dashboard', component: Dashboard, canActivate: [AuthGuard]},
-    {path: 'finance', component: Finance, canActivate: [AuthGuard]}
+    {path: 'finance', component: Finance, canActivate: [AuthGuard]},
+    {path: 'employeeleave', component: LeaveRequest, canActivate: [AuthGuard]},
+    {path: 'employeeleave/submit', component: LeaveReqForm, canActivate: [AuthGuard]}
+    //{path: 'employeeleave/employee/:id', component: LeaveRequest, canActivate: [AuthGuard]},
+    //{path: 'employeeleave/:id/approve', component: LeaveRequest, canActivate: [AuthGuard]}
+
 
 ];

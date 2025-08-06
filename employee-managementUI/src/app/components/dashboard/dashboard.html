@@ -1,27 +1,91 @@
 <!-- Top Summary Cards -->
 <div class="row mb-4">
   <div class="col-md-4">
-    <div class="card text-center shadow-sm">
+    <div class="card text-center shadow-sm" style="background-color: azure;">
       <div class="card-body">
         <h5>Total Employees</h5>
         <p class="display-6">{{ totalEmployees }}</p>
       </div>
     </div>
   </div>
+
   <div class="col-md-4">
-    <div class="card text-center shadow-sm">
+    <div class="card text-center shadow-sm" style="background-color: antiquewhite;">
       <div class="card-body">
         <h5>Today's Birthdays</h5>
         <p class="display-6">{{ birthdaysToday }}</p>
       </div>
     </div>
   </div>
+  <!-- Pending Approvals -->
+   <div class="col-md-4">
+    <div class="card text-center shadow-sm" style="background-color: orange;">
+      <div class="card-body">
+        <h5>Pending Approvals</h5>
+        <p class="display-6">{{ pendingCount }}</p>
+
+        <!-- <button class="btn btn-sm btn-dark view-button" (click)="openDialog()">View</button> -->
+         <button class="btn btn-sm view-button" (click)="openPendingModal()">View</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" *ngIf="showPendingModal" (click)="showPendingModal = false"></div>
+
+<div class="modal-content-wrapper" *ngIf="showPendingModal">
+    <div class="modal-header">
+      <h5 style="text-align: center;">Pending Leave Requests</h5>
+      <button class="close-btn" (click)="closePendingModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="pendingReqs.length > 0; else emptyState"></div>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Emplyoee Name</th>
+              <th>Leave type</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let req of pendingReqs">
+              <td>{{ req.employeeName }}</td>
+              <td>{{ req.leaveType }}</td>
+              <td>{{ req.from | date }}</td>
+              <td>{{ req.to | date }}</td>
+              <td>
+                <span [ngClass]="[
+                  'badge',
+                  req.status === 'Pending' ? 'bg-warning text-dark' : ''
+                ]">
+                {{ req.status }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-success me-1" *ngIf="req.status === 'Pending'" (click)="approveLeave(req.id!)">Approve</button>
+                <button class="btn btn-sm btn-danger me-1" *ngIf="req.status === 'Pending'" (click)="rejectLeave(req.id!)">Reject</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <ng-template #emptyState>
+        <p class="text-muted">No pending requests to show.</p>
+      </ng-template>
+    </div>
+  
+</div>
+
+<!-- Todo List-->
   <div class="col-md-4">
     <div class="card shadow-sm">
       <div class="card-body">
         <h5>To-Do List</h5>
         <ul class="list-unstyled">
-          <li *ngFor="let item of todoList">✅ {{ item }}</li>
+          <li *ngFor="let item of todoList">✅ {{ item.title }}</li>
         </ul>
       </div>
     </div>
@@ -73,12 +137,18 @@
       <div class="card-body">
         <h5>Notifications</h5>
         <ul class="list-unstyled">
-          <li *ngFor="let note of notifications">📣 {{ note }}</li>
+          <li *ngFor="let note of notifications">📣 {{ note.localName }} - {{ note.date | date: 'MMM d'}}</li>
         </ul>
       </div>
     </div>
 
     <!-- Calender-->
+    <mat-card class="calendar-container">
+      <mat-calendar *ngIf="holidaysLoaded && eventsLoaded"
+        (selectedChange)="onDateClick($event)"
+        [dateClass]="dateClass">
+      </mat-calendar>
+    </mat-card>
     
   </div>
 </div>

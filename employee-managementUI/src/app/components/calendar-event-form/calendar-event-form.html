@@ -1,0 +1,32 @@
+<div role="dialog" aria-modal="true" aria-labelledby="leave-dialog-title" class="dialog-container mat-elevation-z4">
+    <div class="dialog-header">
+        <button class="btn btn-sm btn-secondary" (click)="goBack()">← Back</button>
+    </div>
+  <h2 id="leave-dialog-title" class="dialog-title">
+    Add Events
+  </h2>
+  
+
+
+  <form [formGroup]="eventsForm" (ngSubmit)="addEvent()" class="mat-form">
+  
+   <!-- Title -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Title</mat-label>
+    <input matInput type="text" formControlName="localName" placeholder="Title" />
+  </mat-form-field>
+
+  <!-- Due Date -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Event Date</mat-label>
+    <input matInput [matDatepicker]="startPicker" formControlName="date" />
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Submit Button -->
+  <button class="btn btn-sm btn-success" type="submit">Add Event</button>
+</form>
+
+
+</div>

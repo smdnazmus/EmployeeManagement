@@ -26,6 +26,7 @@ export class Payroll implements OnInit{
   filterMonth = '';
   filterMonthControl = new FormControl('');
   filteredList: PayrollRecord[] = [];
+  allPayrollList: PayrollRecord[] = [];
   payrollThisMonth: PayrollRecord[] = [];
   totalPayrollThisMonth = 0;
   selectedRecord: PayrollRecord | null = null;
@@ -81,9 +82,45 @@ export class Payroll implements OnInit{
     this.payrollService.getAll().subscribe({
       next: data => {
         this.payrollList = data;
+        this.allPayrollList = [];
+
+        //this.filteredList = [];
+        let pending = data.length;
+
+        data.forEach(record => {
+          this.empService.getEmpByEmpId(record.employeeId).subscribe({
+            next: emp => {
+              const enrichedRecord = {
+                ...record,
+                employeeName: emp.firstName + ' ' + emp.lastName
+              };
+              this.allPayrollList.push(enrichedRecord);
+              pending--;
+
+              if (pending === 0) {
+                this.filteredList = [...this.allPayrollList];
+                this.updatePayrollSummary();
+              }
+            }, 
+            error: () => {
+              const enrichedRecord = {
+                ...record,
+                employeeName: 'Unknown'
+              };
+              this.allPayrollList.push(enrichedRecord);
+              pending--;
+
+              if (pending === 0) {
+                this.filteredList = [...this.allPayrollList];
+                this.updatePayrollSummary();
+              }
+            }
+          });
+        })
+
         this.filteredList = [...data]; // default: show all
         //this.applyFilter();
-        this.updatePayrollSummary();
+        
       }
     });
   }
@@ -238,20 +275,26 @@ updatePayrollSummary() {
 }
 
 get netPay(): number {
+  /*
   const salary = Number(this.form.value.baseSalary || 0);
   const bonus = Number(this.form.value.bonus || 0);
   const deductions = Number(this.form.value.deductions || 0);
-
-  /*
+*/
+  
   if (!this.selectedRecord) return 0;
 
   const { baseSalary, bonus, deductions } = this.selectedRecord;
-  */
-  return salary + bonus - deductions;
+  
+  return baseSalary + bonus - deductions;
 }
 
 selectRecord(record: PayrollRecord) {
   this.selectedRecord = record;
+  this.empService.getEmpByEmpId(this.selectedRecord.employeeId).subscribe({
+    next: res => {
+      this.fullName = `${res.firstName} ${res.lastName}`;
+    }
+  });
 }
 
 onEmployeeIdChange(id: number) {
@@ -351,4 +394,23 @@ toggleDrawer(): void {
     this.isDrawerOpen = !this.isDrawerOpen;
   }
 
+get fullname() : string | null {
+  
+  if (!this.selectedRecord) return null;
+  
+
+  return this.fullName;
+}
+/*
+employeeName(empId: number) : string {
+  let name = '';
+  this.empService.getEmpByEmpId(empId).subscribe({
+    next: res => {
+      name = '${res.firstName} ${res.lastName}';
+    }
+  });
+
+  return name;
+}
+*/
 }

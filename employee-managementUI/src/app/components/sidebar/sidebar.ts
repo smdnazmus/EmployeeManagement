@@ -12,6 +12,7 @@ export class Sidebar {
   navLinks = [
     { label: 'Dashboard', path: '/dashboard', icon: 'bi bi-speedometer2' },
     { label: 'Emplyoees', path: '/employees', icon: 'bi bi-people' },
+    { label: 'Leaves', path: '/employeeleave', icon: 'bi bi-calendar-event' },
     { label: 'Payroll', path: '/payroll', icon: 'bi bi-credit-card' },
     { label: 'Finance', path: '/finance', icon: 'bi bi-coin'}
   ];

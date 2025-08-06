@@ -1,6 +1,7 @@
 export interface PayrollRecord {
     id: number;
     employeeId: number;
+    employeeName?: string;
     payDate: string;
     baseSalary: number;
     bonus: number;

@@ -25,6 +25,7 @@ interface JwtPayload {
 export class Login {
   error = '';
   isLoggedIn: boolean = false;
+  //employeeId: number = 0;
 
   loginreq: LoginRequest = {
     username: '',
@@ -47,6 +48,7 @@ export class Login {
         // Fetch FullName after login
         this.auth.getProfile().subscribe((profile: EmpProfile) => {
           localStorage.setItem('fullname', profile.fullName);
+          localStorage.setItem('employeeId', String(profile.employeeId));
           console.log(profile);
           this.router.navigate(['/dashboard']);
         });

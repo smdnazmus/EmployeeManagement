@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { CalendarModule } from 'angular-calendar';
-import { DateAdapter } from '@angular/material/core';
+import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       progressBar: true,
       toastClass: 'ngx-toastr', // default class with animation
       //closeButton: true
-    })
+    }),
+    provideNativeDateAdapter()
   ]
 };

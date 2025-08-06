@@ -1,0 +1,68 @@
+.leave-form {
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+  background: #fdfdfd;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+small {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.custom-badge {
+  border-radius: 0.5rem;
+  padding: 0.1em 0.3em;
+  display: inline-block;
+  text-align: center;
+  min-width: 5rem;
+}
+
+.month-label {
+  cursor: pointer;
+  background-color: #f8f9fa;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-top: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.month-label:hover {
+  background-color: #e2e6ea;
+}
+
+.month-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.chevron {
+  float: right;
+  transition: transform 0.3s ease;
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+

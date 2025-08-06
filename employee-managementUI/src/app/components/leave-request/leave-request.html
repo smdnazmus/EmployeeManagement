@@ -1,0 +1,62 @@
+<div class="container mt-5">
+    <h2>Leaves Dashboard</h2>
+    <br>
+    <section class="leaves-page">
+        
+  <!-- Calendar View -->
+  <mat-card class="calendar-container mb-3 p-3">
+    <mat-calendar (selectedChange)="onDateClick($event)"></mat-calendar>
+  </mat-card>
+
+  <!-- Leave History Table -->
+  <section class="leave-history">
+  <h3>Leave History</h3>
+
+  <div *ngFor="let month of groupedLeaves | keyvalue">
+  <div class="month-label" (click)="toggleMonth(month.key)">
+    <h4 class="month-title">
+        {{ month.key }}
+        <span class="chevron" [class.rotate]="openedMonths[month.key]"></span>
+    </h4>
+  </div>
+
+  <table class="table table-striped" *ngIf="openedMonths[month.key]">
+    <thead>
+      <tr>
+        <th>Employee Name</th>
+        <th>Leave Type</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leave of month.value">
+        <td>{{ leave.employeeName }}</td>
+        <td>{{ leave.leaveType }}</td>
+        <td>{{ leave.from | date }}</td>
+        <td>{{ leave.to | date }}</td>
+        <td>
+            <span [ngClass]="[
+                    'badge',
+                    leave.status === 'Approved' ? 'bg-success text-light' : '',
+                    leave.status === 'Rejected' ? 'bg-danger text-light' : '',
+                    leave.status === 'Pending' ? 'bg-warning text-dark' : ''
+                    ]">
+                    {{ leave.status }}
+            </span>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-success me-1" *ngIf="leave.status === 'Pending'" (click)="approveLeave(leave.id!)">Approve</button>
+            <button class="btn btn-sm btn-danger me-1" *ngIf="leave.status === 'Pending'" (click)="rejectLeave(leave.id!)">Reject</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</section>
+</div>

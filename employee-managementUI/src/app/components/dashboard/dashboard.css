@@ -30,3 +30,104 @@ strong {
   text-decoration: underline;
 }
 
+.view-button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 6px 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  background-color: orangered;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: orange;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1040;
+}
+
+.modal-content-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  background: #fff; /* White background */
+  border: none;      /* Remove debug border */
+  width: 500px;
+  max-width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+
+  /* Optional: smooth entry animation */
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+
+.modal-header, .modal-body {
+  padding: 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.request-entry {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+/* Apply background to the cell content */
+/* Target the calendar cell with a specific class and then the content inside */
+
+.friday .mat-calendar-body-cell-content {
+  background-color: #ffe0b2;
+  border-radius: 50%;
+}
+
+.holiday .mat-calendar-body-cell-content {
+  background-color: #ffcdd2;
+  border-radius: 50%;
+}
+
+.event .mat-calendar-body-cell-content {
+  border: 2px solid #4caf50;
+  border-radius: 50%;
+}
+
+
+
+
+

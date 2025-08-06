@@ -23,6 +23,7 @@
       <button class="btn btn-sm btn-warning" (click)="toggleDrawer()">
          Generate Monthly Payroll
       </button>
+      <button class="btn btn-sm btn-success me-1" (click)="exportCSV()">Export CSV</button>
       <button class="btn btn-sm btn-outline-success" (click)="downloadPayslipArchive()">Download Payslips ZIP</button>
     </div>
     
@@ -48,8 +49,10 @@
     <div #payslipToPrint class="payslip px-4 py-3 me-1">
       <div style="text-align: center; margin-bottom: 1rem;">
         <img src="assets/logoAngular.png" alt="company Logo" width="80" /> 
-        <h5 style="margin: 0;">TestApp</h5>
+        <h5 style="margin: 0;">Company Name</h5>
         <small>Payslip for {{ selectedRecord.payDate | date: 'MMMM yyyy'}}</small>
+        <br>
+        <small><strong>{{ fullName }}</strong></small>
       </div>
 
       <hr />
@@ -82,6 +85,7 @@
     
   </div>
 
+  
   <ng-template #noRecord>
     <div class="alert alert-warning text-center">
       No record selected. Please choose a payroll entry to view the payslip.
@@ -92,7 +96,7 @@
     <thead>
       <tr>
         <th>Employee ID</th>
-      <!--  <th>Employee Name</th> -->
+        <th>Employee Name</th> 
         <th>Pay Date</th>
         <th>Base</th>
         <th>Bonus</th>
@@ -104,7 +108,7 @@
     <tbody>
       <tr *ngFor="let record of filteredList">
         <td>{{ record.employeeId }}</td>
-      <!--  <td>{{ EmployeeName(record.employeeId)}}</td> -->
+        <td>{{ record.employeeName }}</td>
         <td>{{ record.payDate | date }}</td>
         <td>{{ record.baseSalary | bdtFormat }}</td>
         <td>{{ record.bonus | bdtFormat }}</td>
@@ -113,7 +117,6 @@
         <td>
           <button class="btn btn-sm btn-info me-1" (click)="selectRecord(record)">View Payslip</button>
           <button class="btn btn-sm btn-success me-1" (click)="downloadPayslipFromBackend(record)">Download</button>
-          <button class="btn btn-sm btn-success me-1" (click)="exportCSV()">Export CSV</button>
           <button class="btn btn-sm btn-warning me-1" (click)="editPayroll(record)">Edit</button>
           <button class="btn btn-sm btn-danger me-1" (click)="deletePayroll(record.id)">Delete</button>
         </td>

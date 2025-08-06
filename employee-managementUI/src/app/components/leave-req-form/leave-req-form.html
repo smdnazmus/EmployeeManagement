@@ -1,0 +1,73 @@
+<div role="dialog" aria-modal="true" aria-labelledby="leave-dialog-title" class="dialog-container mat-elevation-z4">
+  <div class="dialog-header">
+        <button class="btn btn-sm btn-secondary" (click)="goBack()">← Back</button>
+    </div>
+  <h2 id="leave-dialog-title" class="dialog-title">
+    Submit Leave Request
+  </h2>
+
+  <form [formGroup]="leaveForm" (ngSubmit)="submitLeave()" class="mat-form">
+  <!-- Name Field with Autocomplete -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="employeeName"
+      (input)="onSearchChange()"
+      [matAutocomplete]="auto"
+      autocomplete="off"
+      placeholder="Enter name..."
+    />
+
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectEmployee($event.option.value)">
+      <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">
+        {{ employee.firstName }} {{ employee.lastName }} ({{ employee.username }})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+   <!-- Auto-filled Employee ID -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Employee ID</mat-label>
+    <input matInput type="text" formControlName="employeeId" placeholder="Employee ID" readonly />
+  </mat-form-field>
+
+  <!-- Leave Type -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Leave Type</mat-label>
+    <mat-select formControlName="leaveType">
+      <mat-option value="Annual">Annual Leave</mat-option>
+      <mat-option value="Sick">Sick Leave</mat-option>
+      <mat-option value="Casual">Casual Leave</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Start Date -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Start Date</mat-label>
+    <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- End Date -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>End Date</mat-label>
+    <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Reason -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Reason</mat-label>
+    <textarea matInput formControlName="reason" placeholder="Type reason for leave..."></textarea>
+  </mat-form-field>
+
+  <!-- Submit Button -->
+  <button class="btn btn-sm btn-success" type="submit">Submit Leave</button>
+</form>
+
+
+</div>
