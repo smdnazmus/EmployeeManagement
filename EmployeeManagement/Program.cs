@@ -22,27 +22,15 @@ var env = builder.Environment;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-/*
 var connectionString = Environment.GetEnvironmentVariable("DefaultConnection")
     ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlServer(connectionString));
-
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-*/
-var connectionString = Environment.GetEnvironmentVariable("DefaultConnection")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
-
-Console.WriteLine($"connection string {connectionString}");
+//Console.WriteLine($"connection string {connectionString}");
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-//var jwtkey = builder.Configuration["JwtKey"];
 var jwtKey = Environment.GetEnvironmentVariable("JwtKey")
     ?? builder.Configuration["JwtKey"];
 
@@ -61,18 +49,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-/*
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend", p =>
-    {
-        p.WithOrigins("http://localhost:4200")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
-    });
-});
-*/
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -94,8 +70,6 @@ builder.Services.AddScoped<FinanceService>();
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(PayrollProfile));
-
-//var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 
 
 var app = builder.Build();
@@ -121,9 +95,6 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
-
-
 
 app.UseAuthentication();
 

@@ -149,8 +149,9 @@ namespace EmployeeManagement.Controllers
             return Ok(new
             {
                 fullName = user.FirstName + " " + user.LastName,
+                employeeId = user.EmployeeId,
                 email = user.Email,
-                role = user.Role
+                role = user.Role,
             });
         }
 

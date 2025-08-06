@@ -17,6 +17,12 @@ namespace EmployeeManagement.Data
 
         public DbSet<CompanyIncome> CompanyIncomes { get; set; }
 
+        public DbSet<EmployeeLeave> EmployeeLeaves { get; set; }
+
+        public DbSet<TodoTask> TodoTasks { get; set; }
+
+        public DbSet<Event> Events { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PayrollRecord>()
@@ -89,6 +95,31 @@ namespace EmployeeManagement.Data
                .HasConversion(
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            modelBuilder.Entity<EmployeeLeave>()
+               .Property(p => p.StartDate)
+               .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            modelBuilder.Entity<EmployeeLeave>()
+               .Property(p => p.EndDate)
+               .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            modelBuilder.Entity<TodoTask>()
+               .Property(p => p.DueDate)
+               .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+            modelBuilder.Entity<Event>()
+               .Property(p => p.Date)
+               .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
 
             base.OnModelCreating(modelBuilder);
         }
