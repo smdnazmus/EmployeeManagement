@@ -1,6 +1,7 @@
 <!-- Top Summary Cards -->
 <div class="row mb-4">
-  <div class="col-md-4">
+  <!-- Total Employees -->
+  <div class="col-lg-3 col-md-6 mb-3">
     <div class="card text-center shadow-sm" style="background-color: azure;">
       <div class="card-body">
         <h5>Total Employees</h5>
@@ -9,7 +10,8 @@
     </div>
   </div>
 
-  <div class="col-md-4">
+  <!-- Birthdays -->
+  <div class="col-lg-3 col-md-6 mb-3">
     <div class="card text-center shadow-sm" style="background-color: antiquewhite;">
       <div class="card-body">
         <h5>Today's Birthdays</h5>
@@ -18,7 +20,7 @@
     </div>
   </div>
   <!-- Pending Approvals -->
-   <div class="col-md-4">
+   <div class="col-lg-3 col-md-6 mb-3">
     <div class="card text-center shadow-sm" style="background-color: orange;">
       <div class="card-body">
         <h5>Pending Approvals</h5>
@@ -28,59 +30,59 @@
          <button class="btn btn-sm view-button" (click)="openPendingModal()">View</button>
       </div>
     </div>
-  </div>
-  <div class="modal-backdrop" *ngIf="showPendingModal" (click)="showPendingModal = false"></div>
+    <div class="modal-backdrop" *ngIf="showPendingModal" (click)="showPendingModal = false"></div>
 
-<div class="modal-content-wrapper" *ngIf="showPendingModal">
-    <div class="modal-header">
-      <h5 style="text-align: center;">Pending Leave Requests</h5>
-      <button class="close-btn" (click)="closePendingModal()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div *ngIf="pendingReqs.length > 0; else emptyState"></div>
-      <div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Emplyoee Name</th>
-              <th>Leave type</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let req of pendingReqs">
-              <td>{{ req.employeeName }}</td>
-              <td>{{ req.leaveType }}</td>
-              <td>{{ req.from | date }}</td>
-              <td>{{ req.to | date }}</td>
-              <td>
-                <span [ngClass]="[
-                  'badge',
-                  req.status === 'Pending' ? 'bg-warning text-dark' : ''
-                ]">
-                {{ req.status }}
-                </span>
-              </td>
-              <td>
-                <button class="btn btn-sm btn-success me-1" *ngIf="req.status === 'Pending'" (click)="approveLeave(req.id!)">Approve</button>
-                <button class="btn btn-sm btn-danger me-1" *ngIf="req.status === 'Pending'" (click)="rejectLeave(req.id!)">Reject</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <div class="modal-content-wrapper" *ngIf="showPendingModal">
+      <div class="modal-header">
+        <h5 style="text-align: center;">Pending Leave Requests</h5>
+        <button class="close-btn" (click)="closePendingModal()">&times;</button>
       </div>
-      
-      <ng-template #emptyState>
-        <p class="text-muted">No pending requests to show.</p>
-      </ng-template>
-    </div>
-  
-</div>
+      <div class="modal-body">
+        <div *ngIf="pendingReqs.length > 0; else emptyState"></div>
+        <div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Emplyoee Name</th>
+                <th>Leave type</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let req of pendingReqs">
+                <td>{{ req.employeeName }}</td>
+                <td>{{ req.leaveType }}</td>
+                <td>{{ req.from | date }}</td>
+                <td>{{ req.to | date }}</td>
+                <td>
+                  <span [ngClass]="[
+                    'badge',
+                    req.status === 'Pending' ? 'bg-warning text-dark' : ''
+                  ]">
+                  {{ req.status }}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-success me-1" *ngIf="req.status === 'Pending'" (click)="approveLeave(req.id!)">Approve</button>
+                  <button class="btn btn-sm btn-danger me-1" *ngIf="req.status === 'Pending'" (click)="rejectLeave(req.id!)">Reject</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <ng-template #emptyState>
+          <p class="text-muted">No pending requests to show.</p>
+        </ng-template>
+      </div>
+    
+  </div>
+  </div>
 
-<!-- Todo List-->
-  <div class="col-md-4">
+  <!-- Todo List-->
+  <div class="col-lg-3 col-md-6 mb-3">
     <div class="card shadow-sm">
       <div class="card-body">
         <h5>To-Do List</h5>
