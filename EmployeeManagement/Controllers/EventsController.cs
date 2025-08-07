@@ -4,7 +4,6 @@ using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Nager.Holiday;
 
 namespace EmployeeManagement.Controllers
 {
@@ -88,7 +87,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet("holidays")]
-        public async Task<IActionResult> GetYearlyHolidays([FromQuery] int year)
+        public IActionResult GetYearlyHolidays([FromQuery] int year)
         {
             var holidays = GetBangladeshHolidays(year);
             //var monthlyHolidays = holidays.Where(h => h.Date.Month == month);

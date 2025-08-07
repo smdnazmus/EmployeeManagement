@@ -9,13 +9,18 @@ namespace EmployeeManagement.Data
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile("appsettings.json")
                 .Build();
 
             var connectionString = config.GetConnectionString("DefaultConnection");
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseMySql(connectionString,
+            ServerVersion.AutoDetect(connectionString),
+            mySqlOptions => mySqlOptions.EnableRetryOnFailure());
+
+            //Console.WriteLine($"Base path: {Directory.GetCurrentDirectory()}");
+
 
             return new AppDbContext(optionsBuilder.Options);
         }

@@ -9,6 +9,7 @@ using EmployeeManagement.Models;
 using EmployeeManagement.Services;
 using DotNetEnv;
 using Microsoft.Extensions.FileProviders;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 QuestPDF.Settings.License = LicenseType.Community;
 
@@ -23,13 +24,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = Environment.GetEnvironmentVariable("DefaultConnection")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 //Console.WriteLine($"connection string {connectionString}");
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+{
+    options.UseMySql(connectionString,
+    ServerVersion.AutoDetect(connectionString),
+    mySqlOptions => mySqlOptions.EnableRetryOnFailure());
+});
 
 var jwtKey = Environment.GetEnvironmentVariable("JwtKey")
     ?? builder.Configuration["JwtKey"];
